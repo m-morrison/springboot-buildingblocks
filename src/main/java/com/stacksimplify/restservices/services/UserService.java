@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.stacksimplify.restservices.entities.Order;
 import com.stacksimplify.restservices.entities.User;
 import com.stacksimplify.restservices.exceptions.UserExistsException;
 import com.stacksimplify.restservices.exceptions.UserNotFoundException;
@@ -74,6 +75,18 @@ public class UserService {
 	//getUserByUsername
 	public User getUserByUsername(String username) {
 		return userRepository.findByUsername(username);
+	}
+	
+	//get all orders for a user
+	public List<Order> getAllOrders(Long userId) throws UserNotFoundException {
+		Optional<User> userOptional = userRepository.findById(userId);
+		
+		if (!userOptional.isPresent()) {
+			throw new UserNotFoundException("User Not Found");
+		}
+		
+		return userOptional.get().getOrders();
+			
 	}
 
 }
