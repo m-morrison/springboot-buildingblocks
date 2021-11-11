@@ -16,6 +16,7 @@ import org.springframework.hateoas.RepresentationModel;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "user")
@@ -25,30 +26,38 @@ public class User extends RepresentationModel<User> {
 	
 	@Id
 	@GeneratedValue
+	@JsonView(Views.External.class)
 	private Long userId;
 	
 	@NotEmpty(message = "Username is a mandatory field.  Please provide username.")
 	@Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
+	@JsonView(Views.External.class)
 	private String username;
 	
 	@Size(min = 2, message = "First Name should have at least 2 characters")
 	@Column(name = "FIRST_NAME", length = 50, nullable = false)
+	@JsonView(Views.External.class)
 	private String firstname;
 	
 	@Column(name = "LAST_NAME", length = 50, nullable = false)
+	@JsonView(Views.External.class)
 	private String lastname;
 	
 	@Column(name = "EMAIL", length = 50, nullable = false)
+	@JsonView(Views.External.class)
 	private String email;
 	
 	@Column(name = "ROLE", length = 50, nullable = false)
+	@JsonView(Views.Internal.class)
 	private String role;
 	
 	@Column(name = "SSN", length = 50, nullable = false, unique = true)
+	@JsonView(Views.Internal.class)
 	//@JsonIgnore -- Static Filtering
 	private String ssn;
 	
 	@OneToMany(mappedBy = "user")
+	@JsonView(Views.Internal.class)
 	private List<Order> orders;
 
 	//No Argument Constructor

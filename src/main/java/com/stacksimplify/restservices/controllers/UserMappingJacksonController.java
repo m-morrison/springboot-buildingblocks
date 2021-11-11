@@ -63,11 +63,6 @@ public class UserMappingJacksonController {
 			Optional<User> userOptional = userService.getUserById(id);
 			User user = userOptional.get();
 			
-			Set<String> fields = new HashSet<String>();
-			fields.add("userId");
-			fields.add("username");
-			fields.add("ssn");
-			
 			FilterProvider filterProvider = new SimpleFilterProvider()
 					.addFilter("userFilter", SimpleBeanPropertyFilter.filterOutAllExcept(fields));
 			
