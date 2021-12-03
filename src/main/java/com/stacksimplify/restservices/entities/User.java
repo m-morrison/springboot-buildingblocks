@@ -59,12 +59,15 @@ public class User extends RepresentationModel<User> {
 	@OneToMany(mappedBy = "user")
 	@JsonView(Views.Internal.class)
 	private List<Order> orders;
+	
+	@Column(name = "ADDRESS")
+	private String address;
 
 	//No Argument Constructor
 	public User() { }
 	
 	//Fields Constructor
-	public User(Long userId, String username, String firstname, String lastname, String email, String role, String ssn) {
+	public User(Long userId, String username, String firstname, String lastname, String email, String role, String ssn, String address) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -73,6 +76,7 @@ public class User extends RepresentationModel<User> {
 		this.email = email;
 		this.role = role;
 		this.ssn = ssn;
+		this.address = address;
 	}
 	
 	//Getters and Setters
@@ -141,14 +145,20 @@ public class User extends RepresentationModel<User> {
 		this.orders = orders;
 	}
 	
-	//To String - Required for Bean Logging, otherwise Optional
+	public String getAddress() {
+		return address;
+	}
 
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	//To String - Required for Bean Logging, otherwise Optional
 	@Override
 	public String toString() {
-		return "User [id=" + userId + ", username=" + username + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", email=" + email + ", role=" + role + ", ssn=" + ssn + "]";
+		return "User [userId=" + userId + ", username=" + username + ", firstname=" + firstname + ", lastname="
+				+ lastname + ", email=" + email + ", role=" + role + ", ssn=" + ssn + ", orders=" + orders
+				+ ", address=" + address + "]";
 	}
 	
-	
-
 }
